@@ -1,0 +1,43 @@
+import '../models/project.dart';
+
+final List<Project> mockProjects = [
+  Project(
+    id: "PRJ-2023-001",
+    name: "Rural Road Connectivity Ph-IV",
+    scheme: "PMGSY",
+    state: "Maharashtra",
+    district: "Pune",
+    contractor: "Apex Buildcon Pvt Ltd",
+    status: "Delayed",
+    budget: 45000000,
+    spent: 38000000,
+    startDate: "2023-01-15",
+    endDate: "2023-12-30",
+  ),
+  Project(
+    id: "PRJ-2023-042",
+    name: "Primary Health Center Upgrade",
+    scheme: "NHM",
+    state: "Maharashtra",
+    district: "Nagpur",
+    contractor: "Shree Builders",
+    status: "In Progress",
+    budget: 12000000,
+    spent: 4000000,
+    startDate: "2023-06-01",
+    endDate: "2024-03-31",
+  ),
+  Project(
+    id: "PRJ-2023-088",
+    name: "Village Electrification Ext",
+    scheme: "DDUGJY",
+    state: "Gujarat",
+    district: "Surat",
+    contractor: "ElectroTech Infra",
+    status: "Completed",
+    budget: 25000000,
+    spent: 24500000,
+    startDate: "2023-02-10",
+    endDate: "2023-09-15",
+  ),
+];
