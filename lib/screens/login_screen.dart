@@ -21,7 +21,7 @@ class LoginScreen extends StatelessWidget {
                   context: context,
                   builder: (context) => AlertDialog(
                     title: const Text('Update Available!'),
-                    content: const Text('Version 1.0.1 is now available.\n\n- Real-time cloud sync\n- Admin field-verification mode\n- UI Enhancements'),
+                    content: const Text('Version 1.0.2 is now available.\n\n- Role-based UI Polish\n- Bug fixes\n- Performance improvements'),
                     actions: [
                       TextButton(onPressed: () => Navigator.pop(context), child: const Text('LATER')),
                       ElevatedButton(
