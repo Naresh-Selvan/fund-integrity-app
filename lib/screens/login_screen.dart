@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'home_screen.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -8,6 +9,48 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF7F8FA),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) {
+              Future.delayed(const Duration(seconds: 2), () {
+                Navigator.pop(context);
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: const Text('Update Available!'),
+                    content: const Text('Version 1.0.1 is now available.\n\n- Real-time cloud sync\n- Admin field-verification mode\n- UI Enhancements'),
+                    actions: [
+                      TextButton(onPressed: () => Navigator.pop(context), child: const Text('LATER')),
+                      ElevatedButton(
+                        onPressed: () {
+                          launchUrl(Uri.parse('https://github.com/Naresh-Selvan/fund-integrity-app/releases'));
+                        },
+                        style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF10151F)),
+                        child: const Text('DOWNLOAD', style: TextStyle(color: Colors.white)),
+                      ),
+                    ],
+                  ),
+                );
+              });
+
+              return const AlertDialog(
+                content: Row(
+                  children: [
+                    CircularProgressIndicator(),
+                    SizedBox(width: 20),
+                    Text("Checking for updates..."),
+                  ],
+                ),
+              );
+            },
+          );
+        },
+        backgroundColor: const Color(0xFF10151F),
+        child: const Icon(Icons.system_update_alt, color: Colors.white),
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(32.0),
