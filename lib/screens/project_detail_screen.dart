@@ -11,7 +11,7 @@ class ProjectDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Project Overview')),
+      appBar: AppBar(title: Text(role == 'admin' ? 'Project Overview (Admin)' : 'Project Overview')),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,

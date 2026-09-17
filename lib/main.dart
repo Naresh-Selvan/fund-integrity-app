@@ -86,7 +86,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         fontFamily: 'Roboto', // Ideally replace with a good sans-serif like Inter if available
       ),
-      home: const HomeScreen(),
+      home: const LoginScreen(),
     );
   }
 }

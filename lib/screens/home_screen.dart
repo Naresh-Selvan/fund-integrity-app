@@ -26,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Integrity Ledger'),
+        title: Text(widget.role == 'admin' ? 'Field Authority Dashboard' : 'Citizen Portal'),
       ),
       body: Column(
         children: [
