@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'home_screen.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -10,23 +12,41 @@ class LoginScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFFF7F8FA),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
+        onPressed: () async {
           showDialog(
             context: context,
             barrierDismissible: false,
-            builder: (context) {
-              Future.delayed(const Duration(seconds: 2), () {
-                Navigator.pop(context);
+            builder: (context) => const AlertDialog(
+              content: Row(
+                children: [
+                  CircularProgressIndicator(),
+                  SizedBox(width: 20),
+                  Text("Checking for updates..."),
+                ],
+              ),
+            ),
+          );
+
+          try {
+            final response = await http.get(Uri.parse('https://raw.githubusercontent.com/Naresh-Selvan/fund-integrity-app/master/version.json'));
+            Navigator.pop(context); // Close loading dialog
+            
+            if (response.statusCode == 200) {
+              final data = json.decode(response.body);
+              final latestVersion = data['latestVersionName'];
+              const currentVersion = "1.0.2";
+
+              if (latestVersion != currentVersion) {
                 showDialog(
                   context: context,
                   builder: (context) => AlertDialog(
                     title: const Text('Update Available!'),
-                    content: const Text('Version 1.0.2 is now available.\n\n- Role-based UI Polish\n- Bug fixes\n- Performance improvements'),
+                    content: Text('Version $latestVersion is now available.\n\n${data['changelog']}'),
                     actions: [
                       TextButton(onPressed: () => Navigator.pop(context), child: const Text('LATER')),
                       ElevatedButton(
                         onPressed: () {
-                          launchUrl(Uri.parse('https://github.com/Naresh-Selvan/fund-integrity-app/releases'));
+                          launchUrl(Uri.parse(data['updateUrl']), mode: LaunchMode.externalApplication);
                         },
                         style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF10151F)),
                         child: const Text('DOWNLOAD', style: TextStyle(color: Colors.white)),
@@ -34,19 +54,16 @@ class LoginScreen extends StatelessWidget {
                     ],
                   ),
                 );
-              });
-
-              return const AlertDialog(
-                content: Row(
-                  children: [
-                    CircularProgressIndicator(),
-                    SizedBox(width: 20),
-                    Text("Checking for updates..."),
-                  ],
-                ),
-              );
-            },
-          );
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('You are on the latest version.')));
+              }
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Failed to check for updates.')));
+            }
+          } catch (e) {
+            Navigator.pop(context);
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Network error checking for updates.')));
+          }
         },
         backgroundColor: const Color(0xFF10151F),
         child: const Icon(Icons.system_update_alt, color: Colors.white),

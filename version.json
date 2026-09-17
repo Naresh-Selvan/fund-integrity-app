@@ -1,0 +1,7 @@
+{
+  "latestVersionCode": 3,
+  "latestVersionName": "1.0.3",
+  "updateUrl": "https://github.com/Naresh-Selvan/fund-integrity-app/releases/latest",
+  "changelog": "- Real-time GitHub API OTA update logic integrated.
+- UI performance optimizations."
+}
