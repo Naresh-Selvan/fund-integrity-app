@@ -22,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
              p.state.toLowerCase().contains(s) ||
              p.contractor.toLowerCase().contains(s) ||
              p.id.toLowerCase().contains(s);
-    }).toList();
+    }).take(100).toList();
 
     return Scaffold(
       appBar: AppBar(

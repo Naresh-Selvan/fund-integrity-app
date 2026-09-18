@@ -200,7 +200,7 @@ class ProjectDetailScreen extends StatelessWidget {
             const SizedBox(height: 12),
             Container(
               padding: const EdgeInsets.all(32),
-              color: const Color(0xFF1E3A5F).withOpacity(0.05),
+              color: const Color(0xFF1E3A5F).withValues(alpha: 0.05),
               child: Column(
                 children: [
                   const Icon(Icons.warning_amber_rounded, size: 40, color: Color(0xFF1E3A5F)),

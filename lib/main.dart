@@ -14,14 +14,13 @@ class MyApp extends StatelessWidget {
       title: 'Integrity Ledger - Citizen',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        scaffoldBackgroundColor: const Color(0xFFF7F8FA),
+        scaffoldBackgroundColor: const Color(0xFFF8F9FA),
         primaryColor: const Color(0xFF1E3A5F),
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color(0xFF1E3A5F),
           primary: const Color(0xFF1E3A5F),
           secondary: const Color(0xFF10151F),
-          surface: Colors.white,
-          background: const Color(0xFFF7F8FA),
+          surface: const Color(0xFFF8F9FA),
         ),
         appBarTheme: const AppBarTheme(
           backgroundColor: Colors.white,

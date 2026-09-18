@@ -29,14 +29,16 @@ class LoginScreen extends StatelessWidget {
 
           try {
             final response = await http.get(Uri.parse('https://raw.githubusercontent.com/Naresh-Selvan/fund-integrity-app/master/version.json'));
+            if (!context.mounted) return;
             Navigator.pop(context); // Close loading dialog
             
             if (response.statusCode == 200) {
               final data = json.decode(response.body);
               final latestVersion = data['latestVersionName'];
-              const currentVersion = "1.0.2";
+              const currentVersion = "1.0.3";
 
               if (latestVersion != currentVersion) {
+                if (!context.mounted) return;
                 showDialog(
                   context: context,
                   builder: (context) => AlertDialog(
@@ -55,14 +57,17 @@ class LoginScreen extends StatelessWidget {
                   ),
                 );
               } else {
+                if (!context.mounted) return;
                 ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('You are on the latest version.')));
               }
             } else {
-              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Failed to check for updates.')));
+              if (!context.mounted) return;
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Update check failed (404).')));
             }
           } catch (e) {
-            Navigator.pop(context);
-            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Network error checking for updates.')));
+            if (!context.mounted) return;
+            Navigator.pop(context); // Close loading dialog on error
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Unable to connect to update server.')));
           }
         },
         backgroundColor: const Color(0xFF10151F),
@@ -99,11 +104,20 @@ class LoginScreen extends StatelessWidget {
               ),
               const SizedBox(height: 64),
               ElevatedButton(
-                onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => const HomeScreen(role: 'citizen')),
-                  );
+                onPressed: () async {
+                  try {
+                    await Future.delayed(const Duration(seconds: 1)); // simulate network delay
+                    if (!context.mounted) return;
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => const HomeScreen(role: 'citizen')),
+                    );
+                  } catch (e) {
+                    if (!context.mounted) return;
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Login failed: $e')),
+                    );
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF10151F),
